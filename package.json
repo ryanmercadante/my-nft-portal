@@ -17,7 +17,8 @@
     "app:start": "yarn workspace @nft-portal/app start",
     "hardhat": "yarn workspace @nft-portal/hardhat",
     "hardhat:compile": "yarn workspace @nft-portal/hardhat compile",
-    "hardhat:rinkeby": "yarn workspace @nft-portal/hardhat deploy:rinkeby"
+    "hardhat:rinkeby": "yarn workspace @nft-portal/hardhat deploy:rinkeby",
+    "hardhat:moonbase": "yarn workspace @nft-portal/hardhat deploy:moonbase"
   },
   "devDependencies": {
     "typescript": "^4.4.3"

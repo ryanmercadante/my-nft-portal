@@ -6,7 +6,8 @@
   "main": "./types/index.ts",
   "scripts": {
     "compile": "hardhat compile",
-    "deploy:rinkeby": "hardhat deploy --network rinkeby"
+    "deploy:rinkeby": "hardhat run scripts/deployEth.ts --network rinkeby",
+    "deploy:moonbase": "hardhat run scripts/deployMoonbase.ts --network moonbase"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.3.2",

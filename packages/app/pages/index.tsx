@@ -3,16 +3,12 @@ import React, { useEffect, useState } from 'react'
 import {
   ButtonContainer,
   ConnectButton,
-  Container,
   Header,
-  Main,
   MintButton,
   OpenSeaButton,
   OpenSeaCollectionButton,
   SubHeader,
 } from '../styles'
-import { Footer } from '../components/Footer'
-import { Head } from '../components/Head'
 import { getNftContract } from '../utils/helperFunctions'
 import { CONTRACT_ADDRESS } from '../utils/constants'
 
@@ -107,48 +103,40 @@ export default function Home() {
   }, [])
 
   return (
-    <Container>
-      <Head title='Square NFT' content='Website to mint Square NFTs' />
-
-      <Main>
-        <div>
-          <Header>Square NFT</Header>
-          <SubHeader>
-            Each unique. Each beautiful. Mint your Square NFT today!
-          </SubHeader>
-          <OpenSeaCollectionButton
-            href={`https://testnets.opensea.io/collection/squarenft-uxfr0vzno2`}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            🌊 View Collection on OpenSea
-          </OpenSeaCollectionButton>
-          <ButtonContainer>
-            {currentAccount === '' ? (
-              <ConnectButton onClick={connectWallet}>
-                Connect to Wallet
-              </ConnectButton>
-            ) : (
-              <>
-                {nftLink !== '' && (
-                  <OpenSeaButton
-                    href={nftLink}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                  >
-                    Go see your NFT!
-                  </OpenSeaButton>
-                )}
-                <MintButton onClick={mint}>
-                  {isLoading ? 'Minting...' : 'Mint NFT'}
-                </MintButton>
-              </>
+    <div>
+      <Header>Square NFT</Header>
+      <SubHeader>
+        Each unique. Each beautiful. Mint your Square NFT today!
+      </SubHeader>
+      <OpenSeaCollectionButton
+        href={`https://testnets.opensea.io/collection/squarenft-uxfr0vzno2`}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        🌊 View Collection on OpenSea
+      </OpenSeaCollectionButton>
+      <ButtonContainer>
+        {currentAccount === '' ? (
+          <ConnectButton onClick={connectWallet}>
+            Connect to Wallet
+          </ConnectButton>
+        ) : (
+          <>
+            {nftLink !== '' && (
+              <OpenSeaButton
+                href={nftLink}
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                Go see your NFT!
+              </OpenSeaButton>
             )}
-          </ButtonContainer>
-        </div>
-      </Main>
-
-      <Footer />
-    </Container>
+            <MintButton onClick={mint}>
+              {isLoading ? 'Minting...' : 'Mint NFT'}
+            </MintButton>
+          </>
+        )}
+      </ButtonContainer>
+    </div>
   )
 }
