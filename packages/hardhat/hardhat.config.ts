@@ -28,7 +28,13 @@ const config: HardhatUserConfig = {
   networks: {
     rinkeby: {
       url: process.env.RINKEBY_HTTP_KEY,
-      accounts: [process.env.MM_RINKEBY_PRIVATE_KEY as string],
+      accounts: [process.env.MM_PRIVATE_KEY as string],
+    },
+    // Moonbase Alpha network specification
+    moonbase: {
+      url: 'https://rpc.testnet.moonbeam.network',
+      chainId: 1287,
+      accounts: [process.env.MM_PRIVATE_KEY as string],
     },
   },
 }
