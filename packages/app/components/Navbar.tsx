@@ -15,8 +15,8 @@ export const Navbar = () => {
         </Link>
       </li>
       <li>
-        <Link href='/moonriver'>
-          <a>Moonriver</a>
+        <Link href='/moonbase'>
+          <a>Moonbase</a>
         </Link>
       </li>
     </ul>

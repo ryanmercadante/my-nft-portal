@@ -9,7 +9,11 @@ import {
   OpenSeaCollectionButton,
   SubHeader,
 } from '../styles'
-import { getNftContract } from '../utils/helperFunctions'
+import {
+  getAndSetAccount,
+  getNftContract,
+  isEthInjected,
+} from '../utils/helperFunctions'
 import { CONTRACT_ADDRESS } from '../utils/constants'
 
 export default function Home() {
@@ -17,27 +21,24 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
   const [nftLink, setNftLink] = useState('')
 
-  async function checkIfWalletConnected() {
-    // Check that we have access to window global.
-    if (typeof window === undefined) return
+  function setupEventListener() {
+    if (!window.ethereum) return
 
-    // Check for access to window.ethereum.
-    if (!window.ethereum) {
-      console.log('Make sure you have MetaMask installed!')
-      return
-    }
+    const nftContract = getNftContract(ethers, window.ethereum)
+
+    nftContract.on('NewEpicNFTMinted', (from, tokenId) => {
+      setNftLink(
+        `https://testnets.opensea.io/assets/${CONTRACT_ADDRESS}/${tokenId.toNumber()}`
+      )
+    })
+  }
+
+  async function checkIfWalletConnected() {
+    if (!isEthInjected(window)) return
 
     // Check if we're authorized to access the user's wallet.
     try {
-      const accounts = await window.ethereum.request({
-        method: 'eth_accounts',
-      })
-
-      // Set the first authorized account (if any) in state variable
-      if (accounts.length !== 0) {
-        const firstAccount = accounts[0]
-        setCurrentAccount(firstAccount)
-      }
+      await getAndSetAccount(window, (account) => setCurrentAccount(account))
 
       setupEventListener()
     } catch (err) {
@@ -55,28 +56,12 @@ export default function Home() {
     }
 
     try {
-      // Request access to account.
-      const accounts = await window.ethereum.request({
-        method: 'eth_requestAccounts',
-      })
-      setCurrentAccount(accounts[0])
+      await getAndSetAccount(window, (account) => setCurrentAccount(account))
 
       setupEventListener()
     } catch (err) {
       console.error('Something went wrong connecting wallet:', err)
     }
-  }
-
-  function setupEventListener() {
-    if (!window.ethereum) return
-
-    const nftContract = getNftContract(ethers, window.ethereum)
-
-    nftContract.on('NewEpicNFTMinted', (from, tokenId) => {
-      setNftLink(
-        `https://testnets.opensea.io/assets/${CONTRACT_ADDRESS}/${tokenId.toNumber()}`
-      )
-    })
   }
 
   async function mint() {
