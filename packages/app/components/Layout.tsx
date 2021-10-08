@@ -11,14 +11,16 @@ export const Layout: React.FC = ({ children }) => {
   const pathname = cleanPathname(router.pathname as Pathname)
 
   return (
-    <Container>
-      <Head
-        title={`Square NFT | ${pathname}`}
-        content='Website to mint Square NFTs on Ethereum or Moonriver'
-      />
-      <Navbar />
-      <Main>{children}</Main>
-      <Footer />
-    </Container>
+    <>
+      <Navbar pathname={pathname} />
+      <Container>
+        <Head
+          title={`Square NFT | ${pathname}`}
+          content='Website to mint Square NFTs on Ethereum or Moonriver'
+        />
+        <Main>{children}</Main>
+        <Footer />
+      </Container>
+    </>
   )
 }
